@@ -1,0 +1,15 @@
+<div
+  *ngIf="!card.matched"
+  (click)="handleClick(card.id, card.value)"
+  class="card"
+  [ngClass]="{ active: card.clicked }"
+>
+
+  <div class="front">{{ card.value }}</div>
+
+  <div class="back">
+    <img src="../../assets/cardBack.jpg" />
+  </div>
+</div>
+
+<div *ngIf="card.matched" class="hidden"></div>

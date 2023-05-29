@@ -1,0 +1,19 @@
+.game {
+  display: flex;
+  flex-wrap: wrap;
+  width: 75%;
+  margin: 0  auto;
+  justify-content: space-between;
+}
+
+app-card {
+  width: 15.66666%;
+  height: 95px;
+  margin-bottom: 10px;
+}
+
+.count {
+  padding: 5px 0;
+  font-size: 24px;
+  text-align: center;
+}
