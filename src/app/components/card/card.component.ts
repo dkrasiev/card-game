@@ -7,13 +7,8 @@ import {ICard} from "../../model/card";
   styleUrls: ['./card.component.css']
 })
 export class CardComponent {
-  // @ts-ignore
   @Input() card:ICard
-  @Input() handleClick:any
-
-
-  constructor() {
-  }
+  @Input() cardClick:Function
 
 }
 

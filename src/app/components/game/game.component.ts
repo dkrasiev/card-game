@@ -10,25 +10,16 @@ import {Subscription} from "rxjs";
   styleUrls: ['./game.component.css'],
   providers: [DatePipe]
 })
-export class GameComponent implements OnInit {
-  count: number = 0
-  formattedTime: string | null = null
-  cards:ICard[] = []
-  win: boolean = false
+export class GameComponent {
+  count: number
+  formattedTime: string | null
+  cards: ICard[]
+  win: boolean
 
-  // @ts-ignore
-  cardsSubscription: Subscription = null;
-  // @ts-ignore
-  timeSubscription: Subscription = null
-
-  // @ts-ignore
-  countSubscription: Subscription = null
-
-  // @ts-ignore
-  winSubscription: Subscription = null
-
-
-
+  cardsSubscription: Subscription
+  timeSubscription: Subscription
+  countSubscription: Subscription
+  winSubscription: Subscription
 
   constructor(public gameService: GameService) {
     this.cardsSubscription = this.gameService.cardsSubject$.subscribe(value => this.cards = value)
@@ -38,20 +29,5 @@ export class GameComponent implements OnInit {
 
   }
 
-
-  ngOnInit() {
-    this.gameService.newGame()
-  }
-
-  handleClick(id: number, value: number) {
-    console.log(this)
-    this.gameService.handleClick(id, value)
-    this.cards = this.gameService.getCards()
-
-  }
-
-  startGame() {
-    this.gameService.startGame()
-  }
 
 }

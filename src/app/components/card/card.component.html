@@ -1,13 +1,12 @@
 <div
   *ngIf="!card.matched"
-  (click)="handleClick(card.id, card.value)"
+  (click)="cardClick(card.id, card.value)"
   class="card"
-  [ngClass]="{ active: card.clicked }"
 >
 
-  <div class="front">{{ card.value }}</div>
+  <div *ngIf="card.clicked" class="front">{{ card.value }}</div>
 
-  <div class="back">
+  <div *ngIf="!card.clicked" class="back">
     <img src="../../../assets/cardBack.jpg" />
   </div>
 </div>

@@ -8,7 +8,8 @@
 
 app-card {
   width: 15.66666%;
-  height: 95px;
+  max-height: 95px;
+  height: 13vw;
   margin-bottom: 10px;
 }
 

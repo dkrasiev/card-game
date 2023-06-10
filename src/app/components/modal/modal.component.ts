@@ -7,12 +7,12 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent {
-  @Input() click:any
+  @Input() startGame:Function
 
   modalShow:boolean = true
 
   handleClick() {
-    this.click()
+    this.startGame()
     this.modalShow = false
   }
 

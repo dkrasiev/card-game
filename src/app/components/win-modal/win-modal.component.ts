@@ -6,12 +6,8 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./win-modal.component.css']
 })
 export class WinModalComponent {
-  @Input() count: any
-  @Input() time: any
-  @Input() click: any
+  @Input() count: number
+  @Input() time: string | null
+  @Input() restartGame: Function
 
-
-  handleClick() {
-    this.click()
-  }
 }

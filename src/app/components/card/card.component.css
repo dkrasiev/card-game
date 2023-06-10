@@ -2,9 +2,8 @@
   width: 70%;
   height: 100%;
   color: #000;
-  transform-style: preserve-3d;
   position: relative;
-  transition: transform 0.5s ease-in-out;
+  font-size: 24px;
 }
 
 
@@ -25,18 +24,8 @@
 
 .front {
   background-color: #fff;
-  transform: rotateY(180deg);
 }
 
-.active .front {
-  -webkit-transform: rotateY(360deg);
-  transform: rotateY(360deg);
-}
-
-.active .back {
-  -webkit-transform: rotateY(180deg);
-  transform: rotateY(180deg);
-}
 
 .back img {
   width: 100%;
