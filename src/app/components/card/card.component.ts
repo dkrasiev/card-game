@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ICard} from "../../model/card";
+import {GameService} from "../../services/game.service";
 
 @Component({
   selector: 'app-card',
@@ -7,8 +8,14 @@ import {ICard} from "../../model/card";
   styleUrls: ['./card.component.css']
 })
 export class CardComponent {
-  @Input() card:ICard
-  @Input() cardClick:Function
+  @Input() card!:ICard
+
+  constructor(public gameService:GameService) {
+  }
+
+  cardClick(id:number, value:number) {
+    this.gameService.handleClick(id,value)
+  }
 
 }
 

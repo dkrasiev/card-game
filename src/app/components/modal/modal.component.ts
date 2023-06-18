@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {GameService} from "../../services/game.service";
 
 
 @Component({
@@ -7,13 +8,15 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent {
-  @Input() startGame:Function
+  modalShow: boolean = true
 
-  modalShow:boolean = true
+  constructor(private gameService: GameService) {
+  }
 
-  handleClick() {
-    this.startGame()
+  startGame() {
+    this.gameService.newGame()
     this.modalShow = false
   }
+
 
 }

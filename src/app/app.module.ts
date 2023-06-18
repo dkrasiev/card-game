@@ -8,6 +8,7 @@ import { CardComponent } from './components/card/card.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { WinModalComponent } from './components/win-modal/win-modal.component';
 import {DatePipe} from "@angular/common";
+import {GameService} from "./services/game.service";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import {DatePipe} from "@angular/common";
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

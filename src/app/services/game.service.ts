@@ -15,8 +15,8 @@ export class GameService {
   cardsSubject: BehaviorSubject<ICard[]> = new BehaviorSubject<ICard[]>([])
   cardsSubject$: Observable<ICard[]> = this.cardsSubject.asObservable()
 
-  formattedTime: BehaviorSubject<string | null> = new BehaviorSubject<string | null>("00:00")
-  formattedTime$: Observable<string | null> = this.formattedTime.asObservable()
+  formattedTime: BehaviorSubject<string> = new BehaviorSubject<string>("00:00")
+  formattedTime$: Observable<string> = this.formattedTime.asObservable()
 
   count: BehaviorSubject<number> = new BehaviorSubject<number>(0)
   count$: Observable<number> = this.count.asObservable()
@@ -27,45 +27,22 @@ export class GameService {
 
   constructor(private datePipe: DatePipe) {
     this.selectedCards = [];
-    this.cards = [
-      {id: 1, value: 1, clicked: false, matched: false},
-      {id: 2, value: 1, clicked: false, matched: false},
-      {id: 3, value: 2, clicked: false, matched: false},
-      {id: 4, value: 2, clicked: false, matched: false},
-      {id: 5, value: 3, clicked: false, matched: false},
-      {id: 6, value: 3, clicked: false, matched: false},
-      {id: 7, value: 4, clicked: false, matched: false},
-      {id: 8, value: 4, clicked: false, matched: false},
-      {id: 9, value: 5, clicked: false, matched: false},
-      {id: 10, value: 5, clicked: false, matched: false},
-      {id: 11, value: 6, clicked: false, matched: false},
-      {id: 12, value: 6, clicked: false, matched: false},
-      {id: 13, value: 7, clicked: false, matched: false},
-      {id: 14, value: 7, clicked: false, matched: false},
-      {id: 15, value: 8, clicked: false, matched: false},
-      {id: 16, value: 8, clicked: false, matched: false},
-      {id: 17, value: 9, clicked: false, matched: false},
-      {id: 18, value: 9, clicked: false, matched: false},
-      {id: 20, value: 10, clicked: false, matched: false},
-      {id: 19, value: 10, clicked: false, matched: false},
-      {id: 21, value: 11, clicked: false, matched: false},
-      {id: 22, value: 11, clicked: false, matched: false},
-      {id: 23, value: 12, clicked: false, matched: false},
-      {id: 24, value: 12, clicked: false, matched: false},
-      {id: 25, value: 13, clicked: false, matched: false},
-      {id: 26, value: 13, clicked: false, matched: false},
-      {id: 27, value: 14, clicked: false, matched: false},
-      {id: 28, value: 14, clicked: false, matched: false},
-      {id: 29, value: 15, clicked: false, matched: false},
-      {id: 30, value: 15, clicked: false, matched: false},
-      {id: 31, value: 16, clicked: false, matched: false},
-      {id: 32, value: 16, clicked: false, matched: false},
-      {id: 33, value: 17, clicked: false, matched: false},
-      {id: 34, value: 17, clicked: false, matched: false},
-      {id: 35, value: 18, clicked: false, matched: false},
-      {id: 36, value: 18, clicked: false, matched: false},
-    ]
+    this.cards = this.createCards()
     this.setCardsSubject(this.cards)
+  }
+
+   createCards() {
+    let res = [];
+    for (let i = 0; i < 36; i++) {
+      let card: ICard = {
+        id: i + 1,
+        value: Math.round((i + 1) / 2),
+        clicked: false,
+        matched:false
+      };
+      res.push(card);
+    }
+    return res;
   }
 
   setCardsSubject(cards: ICard[]) {
@@ -80,6 +57,7 @@ export class GameService {
   }
 
   newGame() {
+
     this.cards = this.cards.sort(() => Math.random() - 0.5);
     this.setCardsSubject(this.cards)
     this.cards = this.cards.map((card) => {
@@ -92,7 +70,7 @@ export class GameService {
     this.formattedTime.next("00:00")
     this.interval = setInterval(() => {
       this.time++;
-      this.formattedTime.next(this.datePipe.transform(new Date(this.time * 1000), 'mm:ss'));
+      this.formattedTime.next(<string>this.datePipe.transform(new Date(this.time * 1000), 'mm:ss'));
     }, 1000)
     this.win.next(false)
   }
@@ -144,7 +122,5 @@ export class GameService {
       this.selectedCards = [...this.selectedCards, {id, value, clicked: false, matched: false}];
     }
     this.setCardsSubject(this.cards)
-
   }
-
 }
