@@ -8,11 +8,3 @@
 <app-modal></app-modal>
 
 <app-win-modal [time]="this.gameService.formattedTime$ | async" [count]="this.gameService.count$ | async" *ngIf="this.gameService.win$ | async"></app-win-modal>
-
-<!--<div class="game">-->
-<!--  <app-card [cardClick] = 'this.gameService.handleClick.bind(this.gameService)' [card] = "card" *ngFor="let card of cards"></app-card>-->
-<!--</div>-->
-
-<!--<app-modal [startGame]="this.gameService.newGame.bind(this.gameService)"></app-modal>-->
-
-<!--<app-win-modal [restartGame]="this.gameService.newGame.bind(this.gameService)" [time]="this.formattedTime" [count]="this.count" *ngIf="win"></app-win-modal>-->
