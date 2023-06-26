@@ -2,9 +2,26 @@
 
 
 <div class="game">
-  <app-card [card] = "card" *ngFor="let card of this.gameService.cardsSubject$ | async"></app-card>
+  <app-card [card]="card" *ngFor="let card of this.gameService.cardsSubject$ | async"></app-card>
 </div>
 
-<app-modal></app-modal>
 
-<app-win-modal [time]="this.gameService.formattedTime$ | async" [count]="this.gameService.count$ | async" *ngIf="this.gameService.win$ | async"></app-win-modal>
+<app-modal *ngIf="modalShow" (onModal)="startGame($event)" [modalShow]="modalShow" title="Игра 'Найди пару'">
+
+</app-modal>
+
+
+<app-modal [modalShow]="winModalShow" (onWinModal)="restartGame($event)" title="Вы выиграли" *ngIf="winModalShow">
+
+  <div class="modal__info">
+    <span>Ходы: {{this.gameService.count$ | async}} </span>
+    <span>Время: {{this.gameService.formattedTime$ | async }}</span>
+  </div>
+
+</app-modal>
+
+
+
+
+
+

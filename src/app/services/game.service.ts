@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ICard} from "../model/card";
 import {DatePipe} from "@angular/common";
-import {BehaviorSubject, Observable, scan} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,7 @@ export class GameService {
 
    createCards() {
     let res = [];
-    for (let i = 0; i < 36; i++) {
+    for (let i = 0; i < 4; i++) {
       let card: ICard = {
         id: i + 1,
         value: Math.round((i + 1) / 2),

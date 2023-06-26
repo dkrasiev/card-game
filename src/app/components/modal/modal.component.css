@@ -18,6 +18,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  color: #000;
 }
 
 .modal__title {
