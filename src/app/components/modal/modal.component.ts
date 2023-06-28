@@ -8,11 +8,8 @@ import {GameService} from "../../services/game.service";
   styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent {
-  @Input() title!:string
-  @Input() modalShow!:boolean
-  @Input() winModalShow!:boolean
-  @Output() onModal = new EventEmitter()
-  @Output() onWinModal = new EventEmitter()
+  @Input() title!: string
+  @Output() click = new EventEmitter()
 
 
   constructor(private gameService: GameService) {

@@ -4,10 +4,7 @@
 
     <h2 class="modal__title">{{title}}</h2>
     <ng-content></ng-content>
-    <button *ngIf="modalShow" class="modal__button" (click)="onModal.emit(!modalShow)">Закрыть</button>
-    <button *ngIf="winModalShow" class="modal__button" (click)="onWinModal.emit(!winModalShow)">Закрыть</button>
-
-    <ng-content select="[win]"></ng-content>
+    <button  class="modal__button" (click)="click">Играть</button>
 
   </div>
 

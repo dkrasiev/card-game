@@ -8,13 +8,13 @@ import {GameService} from "../../services/game.service";
   styleUrls: ['./card.component.css']
 })
 export class CardComponent {
-  @Input() card!:ICard
+  @Input() card!: ICard
 
-  constructor(public gameService:GameService) {
+  constructor(public gameService: GameService) {
   }
 
-  cardClick(id:number, value:number) {
-    this.gameService.handleClick(id,value)
+  cardClick(id: number, value: number) {
+    this.gameService.cardClick(id, value)
   }
 
 }

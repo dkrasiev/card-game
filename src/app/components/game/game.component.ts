@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {DatePipe} from "@angular/common";
 import {GameService} from "../../services/game.service";
-import {ICard} from "../../model/card";
 
 @Component({
   selector: 'app-game',
@@ -11,20 +10,19 @@ import {ICard} from "../../model/card";
 })
 export class GameComponent {
   modalShow: boolean = true
-  winModalShow:boolean = false
+  winModalShow: boolean = false
 
   constructor(public gameService: GameService) {
-    this.gameService.win$.subscribe(value => this.winModalShow = value)
   }
 
-  startGame(toggle: boolean) {
+  startGame() {
     this.gameService.newGame()
-    this.modalShow = toggle;
+    this.modalShow = false;
   }
 
-  restartGame(toggle: boolean) {
+  restartGame() {
     this.gameService.newGame()
-    this.winModalShow = toggle
+    this.winModalShow = false
   }
 
 }

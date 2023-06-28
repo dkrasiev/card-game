@@ -2,14 +2,15 @@
   *ngIf="!card.matched"
   (click)="cardClick(card.id, card.value)"
   class="card"
+  [class.flip]="card.clicked"
 >
 
-  <div *ngIf="card.clicked" class="front">{{ card.value }}</div>
+  <div  class="front">{{ card.value }}</div>
 
-  <div *ngIf="!card.clicked" class="back">
+  <div  class="back">
     <img src="../../../assets/cardBack.jpg"/>
   </div>
 </div>
 
-<div *ngIf="card.matched" class="hidden"></div>
+
 

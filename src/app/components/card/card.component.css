@@ -1,38 +1,110 @@
 .card {
-  width: 70%;
-  height: 100%;
-  color: #000;
-  position: relative;
+  width: 3em;
+  height: 4em;
   font-size: 24px;
-}
-
-
-.back,
-.front {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.3s;
-  backface-visibility: hidden;
+  -webkit-transition: transform 0.6s;
   transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
-.front {
-  background-color: #fff;
+.card.flip {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }
-
 
 .back img {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
-.hidden {
-  visibility: hidden;
+.front, .back {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
 }
+
+.front {
+  height: 100%;
+  background-color: #fff;
+  color: #000;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.back {
+  height: 100%;
+  transform: rotateX(0deg);
+  -webkit-transform: rotateX(0deg);
+  position: absolute;
+  text-align: center;
+  right: 0;
+  left: 0;
+  top: 0;
+  color: #20263f;
+}
+
+
+
+
+
+/*.card {*/
+/*  width: 3em;*/
+/*  height: 4em;*/
+/*  color: #000;*/
+/*  position: relative;*/
+/*  font-size: 24px;*/
+/*  perspective: 600px;*/
+/*  -webkit-transition: transform 0.6s;*/
+/*  transform-style: preserve-3d;*/
+/*}*/
+
+/*.card.active {*/
+/*  transform: rotateY(180deg);*/
+/*  -webkit-transform: rotateY(180deg);*/
+/*}*/
+
+/*.back,*/
+/*.front {*/
+/*  height: 100%;*/
+/*  width: 100%;*/
+/*  position: absolute;*/
+/*  left: 0;*/
+/*  top: 0;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  transition: 0.3s;*/
+/*  -webkit-backface-visibility: hidden;*/
+/*  backface-visibility: hidden;*/
+/*  transform-style: preserve-3d;*/
+/*}*/
+
+/*.front {*/
+/*  background-color: #fff;*/
+/*  transform: rotateX(360deg);*/
+/*  -webkit-transform: rotateX(360deg);*/
+/*}*/
+
+/*.back {*/
+/*  transform: rotateY(360deg);*/
+/*  -webkit-transform: rotateY(360deg);*/
+
+/*}*/
+
+
+
+/*.back img {*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*}*/
+
+/*.hidden {*/
+/*  visibility: hidden;*/
+/*}*/
 
