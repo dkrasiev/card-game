@@ -84,10 +84,12 @@ export class Game {
     ) {
       return;
     }
-
-    this.cards = this.cards.map((card: ICard) =>
-      card.id === id ? {...card, clicked: true} : card
-    );
+    
+    for (let i = 0; i < this.cards.length; i++) {
+      if (this.cards[i].id === id) {
+        this.cards[i].clicked = true
+      }
+    }
 
     if (this.selectedCards.length === 1 && this.selectedCards[0]) {
       this.count.next(this.count.value + 1)
@@ -98,9 +100,14 @@ export class Game {
 
       if (card1.value == card2?.value) {
         setTimeout(() => {
-          this.cards = this.cards.map((card) =>
-            card.value === card1.value ? {...card, matched: true} : card
-          );
+
+
+          for (let i = 0; i < this.cards.length; i++) {
+            if (this.cards[i].value === card1.value) {
+              this.cards[i].matched = true
+            }
+          }
+
           this.isWin()
           this.setCardsSubject(this.cards)
 
@@ -109,11 +116,13 @@ export class Game {
       } else {
         this.selectedCards = [card1, card2];
         setTimeout(() => {
-          this.cards = this.cards.map((card) =>
-            card.id === card1?.id || card.id === card2?.id
-              ? {...card, clicked: false}
-              : card
-          );
+
+          for (let i = 0; i < this.cards.length; i++) {
+            if (this.cards[i].id === card1?.id || this.cards[i].id === card2?.id) {
+              this.cards[i].clicked = false
+            }
+          }
+
           this.selectedCards = [];
           this.setCardsSubject(this.cards)
 

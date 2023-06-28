@@ -9,6 +9,7 @@ import {ModalComponent} from './components/modal/modal.component';
 import {DatePipe} from "@angular/common";
 import {GameService} from "./services/game.service";
 import {Game} from "./services/Game";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {Game} from "./services/Game";
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [DatePipe, GameService, Game],
   bootstrap: [AppComponent]
