@@ -1,31 +1,21 @@
-import {ICard} from "../model/card";
-import {DatePipe} from "@angular/common";
+import {ICard} from "./card";
 import {BehaviorSubject, Observable} from "rxjs";
-import {Injectable} from "@angular/core";
+import {TimeService} from "../services/time.service";
+import {CountService} from "../services/count.service";
 
-@Injectable({
-  providedIn: 'root',
-})
+
 export class Game {
 
   cards: ICard[] = [];
   selectedCards: (ICard | undefined)[] = [];
-  time: number = 0;
-  interval: any;
 
   cardsSubject: BehaviorSubject<ICard[]> = new BehaviorSubject<ICard[]>([])
   cardsSubject$: Observable<ICard[]> = this.cardsSubject.asObservable()
 
-  formattedTime: BehaviorSubject<string> = new BehaviorSubject<string>("00:00")
-  formattedTime$: Observable<string> = this.formattedTime.asObservable()
-
-  count: BehaviorSubject<number> = new BehaviorSubject<number>(0)
-  count$: Observable<number> = this.count.asObservable()
-
   win: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   win$: Observable<boolean> = this.win.asObservable()
 
-  constructor(private datePipe: DatePipe) {
+  constructor(private timeService: TimeService, private countService: CountService) {
     this.selectedCards = [];
     this.cards = this.createCards()
     this.setCardsSubject(this.cards)
@@ -33,7 +23,7 @@ export class Game {
 
   createCards() {
     let res = [];
-    for (let i = 0; i < 36; i++) {
+    for (let i = 0; i < 4; i++) {
       let card: ICard = {
         id: i + 1,
         value: Math.round((i + 1) / 2),
@@ -45,6 +35,18 @@ export class Game {
     return res;
   }
 
+  shuffleCards(cards: ICard[]) {
+    return cards.sort(() => Math.random() - 0.5);
+  }
+
+  resetCards(cards: ICard[]) {
+    return cards.map((card) => {
+      card.matched = false
+      card.clicked = false
+      return card
+    })
+  }
+
 
   setCardsSubject(cards: ICard[]) {
     this.cardsSubject.next(cards)
@@ -53,26 +55,14 @@ export class Game {
   isWin() {
     if (!this.cards.find(card => card.matched === false)) {
       this.win.next(true)
-      clearInterval(this.interval);
+      this.timeService.clearTimeInterval()
     }
   }
 
   newGame() {
-
-    this.cards = this.cards.sort(() => Math.random() - 0.5);
-    this.setCardsSubject(this.cards)
-    this.cards = this.cards.map((card) => {
-      card.matched = false
-      card.clicked = false
-      return card
-    })
-    this.count.next(0)
-    this.time = 0;
-    this.formattedTime.next("00:00")
-    this.interval = setInterval(() => {
-      this.time++;
-      this.formattedTime.next(<string>this.datePipe.transform(new Date(this.time * 1000), 'mm:ss'));
-    }, 1000)
+    this.cards = this.shuffleCards(this.cards)
+    this.cards = this.resetCards(this.cards)
+    this.countService.resetCount()
     this.win.next(false)
   }
 
@@ -84,7 +74,7 @@ export class Game {
     ) {
       return;
     }
-    
+
     for (let i = 0; i < this.cards.length; i++) {
       if (this.cards[i].id === id) {
         this.cards[i].clicked = true
@@ -92,7 +82,9 @@ export class Game {
     }
 
     if (this.selectedCards.length === 1 && this.selectedCards[0]) {
-      this.count.next(this.count.value + 1)
+
+      this.countService.step()
+
       const card1: ICard = this.selectedCards[0];
       const card2: ICard | undefined = this.cards.find(
         (card: ICard): boolean => card.id === id
@@ -100,7 +92,6 @@ export class Game {
 
       if (card1.value == card2?.value) {
         setTimeout(() => {
-
 
           for (let i = 0; i < this.cards.length; i++) {
             if (this.cards[i].value === card1.value) {

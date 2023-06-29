@@ -1,4 +1,4 @@
-<div class="count">Ходы: {{this.gameService.count}} Время: {{this.gameService.time}}</div>
+<div class="count">Ходы: {{this.countService.count | async}} Время: {{this.timeService.formattedTime | async}}</div>
 
 
 <div class="game">
@@ -16,8 +16,8 @@
 <app-modal *ngIf="this.gameService.win" (click)="restartGame()" title="Вы выиграли">
 
   <div class="modal__info">
-    <span>Ходы: {{this.gameService.count}} </span>
-    <span>Время: {{this.gameService.time}}</span>
+    <span>Ходы: {{this.countService.count | async}} </span>
+    <span>Время: {{this.timeService.formattedTime | async}}</span>
   </div>
 
 </app-modal>

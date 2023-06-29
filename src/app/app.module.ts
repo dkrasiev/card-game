@@ -8,7 +8,7 @@ import {CardComponent} from './components/card/card.component';
 import {ModalComponent} from './components/modal/modal.component';
 import {DatePipe} from "@angular/common";
 import {GameService} from "./services/game.service";
-import {Game} from "./services/Game";
+import {Game} from "./model/Game";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
@@ -23,7 +23,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [DatePipe, GameService, Game],
+  providers: [DatePipe, GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
