@@ -8,6 +8,7 @@ export class Game {
 
   cards: ICard[] = [];
   selectedCards: (ICard | undefined)[] = [];
+  isStep: Boolean = false;
 
   cardsSubject: BehaviorSubject<ICard[]> = new BehaviorSubject<ICard[]>([])
   cardsSubject$: Observable<ICard[]> = this.cardsSubject.asObservable()
@@ -15,10 +16,12 @@ export class Game {
   win: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   win$: Observable<boolean> = this.win.asObservable()
 
-  constructor(private timeService: TimeService, private countService: CountService) {
+  constructor() {
     this.selectedCards = [];
     this.cards = this.createCards()
     this.setCardsSubject(this.cards)
+    this.cards = this.shuffleCards(this.cards)
+    this.win.next(false)
   }
 
   createCards() {
@@ -39,14 +42,6 @@ export class Game {
     return cards.sort(() => Math.random() - 0.5);
   }
 
-  resetCards(cards: ICard[]) {
-    return cards.map((card) => {
-      card.matched = false
-      card.clicked = false
-      return card
-    })
-  }
-
 
   setCardsSubject(cards: ICard[]) {
     this.cardsSubject.next(cards)
@@ -55,15 +50,8 @@ export class Game {
   isWin() {
     if (!this.cards.find(card => card.matched === false)) {
       this.win.next(true)
-      this.timeService.clearTimeInterval()
+      //this.timeService.clearTimeInterval()
     }
-  }
-
-  newGame() {
-    this.cards = this.shuffleCards(this.cards)
-    this.cards = this.resetCards(this.cards)
-    this.countService.resetCount()
-    this.win.next(false)
   }
 
   handleClick(id: number, value: number) {
@@ -83,7 +71,7 @@ export class Game {
 
     if (this.selectedCards.length === 1 && this.selectedCards[0]) {
 
-      this.countService.step()
+      //this.countService.step()
 
       const card1: ICard = this.selectedCards[0];
       const card2: ICard | undefined = this.cards.find(
@@ -119,8 +107,10 @@ export class Game {
 
         }, 1500);
       }
+      this.isStep = true;
     } else {
       this.selectedCards = [...this.selectedCards, {id, value, clicked: false, matched: false}];
+      this.isStep = false;
     }
     this.setCardsSubject(this.cards)
   }

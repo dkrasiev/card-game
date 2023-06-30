@@ -14,18 +14,29 @@ export class GameService {
 
 
   constructor(private timeService: TimeService, private countService: CountService) {
-    this.game = new Game(timeService, countService)
+    this.game = new Game()
     this.cards = this.game.cards
-    this.game.cardsSubject$.subscribe(value => this.cards = value)
-    this.game.win$.subscribe(value => this.win = value)
   }
 
   newGame() {
-    this.game.newGame()
+    this.game = new Game()
+    this.countService.resetCount()
+    this.cards = this.game.cards
+    this.game.cardsSubject$.subscribe(value => this.cards = value)
+
+    this.game.win$.subscribe(value => {
+      this.win = value
+      if(value) {
+        this.timeService.clearTimeInterval()
+      }
+    })
   }
 
   cardClick(id: number, value: number) {
-    this.game.handleClick(id, value)
+    this.game.handleClick(id, value);
+    if(this.game.isStep) {
+      this.countService.step()
+    }
   }
 
 }

@@ -10,6 +10,7 @@ import {DatePipe} from "@angular/common";
 import {GameService} from "./services/game.service";
 import {Game} from "./model/Game";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {TimeService} from "./services/time.service";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [DatePipe, GameService],
+  providers: [DatePipe, GameService, TimeService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

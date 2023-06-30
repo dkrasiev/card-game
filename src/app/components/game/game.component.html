@@ -2,10 +2,8 @@
 
 
 <div class="game">
-  <ng-container *ngFor="let card of this.gameService.cards ">
-    <app-card [card]="card" >
+    <app-card *ngFor="let card of this.gameService.cards " [card]="card" >
     </app-card>
-  </ng-container>
 </div>
 
 
