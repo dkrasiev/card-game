@@ -1,18 +1,36 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {GameService} from "../../services/game.service";
-
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
 })
-export class ModalComponent {
-  @Input() title!: string
-  @Output() click = new EventEmitter()
+export class ModalComponent implements OnDestroy {
+  @Input() public title = 'title';
+  @Input() public closable = false;
 
+  @Output() public click = new EventEmitter();
+  @Output() public destroy = new EventEmitter();
 
-  constructor(private gameService: GameService) {
+  public ngOnDestroy(): void {
+    this.destroy.emit();
   }
 
+  public emitClick() {
+    this.click.emit();
+  }
+
+  public onBackdropClick(e: Event) {
+    e.stopPropagation();
+
+    if (this.closable) {
+      this.click.emit();
+    }
+  }
 }

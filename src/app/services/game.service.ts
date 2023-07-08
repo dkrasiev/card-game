@@ -1,42 +1,55 @@
-import {Injectable} from '@angular/core';
-import {ICard} from "../model/card";
-import {Game} from "../model/Game";
-import {TimeService} from "./time.service";
-import {CountService} from "./count.service";
+import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+import { Game } from '../model/game';
+import { TimeService } from './time.service';
+import { CountService } from './count.service';
+import { GameState } from '../model/game-state.enum';
+
+@Injectable()
 export class GameService {
-  cards: ICard[] = [];
-  win: boolean = false
-  game!: Game
+  public game?: Game;
 
+  private canSelect = true;
 
-  constructor(private timeService: TimeService, private countService: CountService) {
-    this.game = new Game()
-    this.cards = this.game.cards
+  constructor(
+    private timeService: TimeService,
+    private countService: CountService
+  ) { }
+
+  public startNewGame(rowCount: number, columnCount: number) {
+    this.game = new Game(rowCount, columnCount);
+
+    this.countService.reset();
+    this.timeService.start();
   }
 
-  newGame() {
-    this.game = new Game()
-    this.countService.resetCount()
-    this.cards = this.game.cards
-    this.game.cardsSubject$.subscribe(value => this.cards = value)
+  public async selectCard(id: number) {
+    if (!this.game || !this.canSelect) {
+      return;
+    }
 
-    this.game.win$.subscribe(value => {
-      this.win = value
-      if(value) {
-        this.timeService.clearTimeInterval()
+    const isTurnMaked = this.game.makeTurn(id);
+    if (isTurnMaked) this.game.next();
+
+    while (this.game.state !== GameState.WAITING) {
+      if (this.game.state === GameState.MISSMATCH) {
+        await this.wait(1000);
       }
-    })
-  }
 
-  cardClick(id: number, value: number) {
-    this.game.handleClick(id, value);
-    if(this.game.isStep) {
-      this.countService.step()
+      if (this.game.state === GameState.CLOSED) {
+        this.countService.step();
+      }
+
+      if (this.game.state === GameState.WIN) {
+        this.timeService.stop();
+        break;
+      }
+
+      this.game.next();
     }
   }
 
+  private wait(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 }

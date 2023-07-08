@@ -1,31 +1,44 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
-import {DatePipe} from "@angular/common";
+import { Injectable, OnDestroy } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class TimeService {
-  interval: any
-  time: number = 0
+export class TimeService implements OnDestroy {
+  public formattedTime: string = '00:00';
 
-  formattedTime: BehaviorSubject<string> = new BehaviorSubject<string>("00:00")
+  private ONE_SECOND = 1000;
+  private time: number = 0;
+  private interval: any;
 
-  constructor(private datePipe: DatePipe) {
+  constructor(private datePipe: DatePipe) { }
+
+  public ngOnDestroy(): void {
+    this.stop();
   }
 
-  startCounting() {
-    this.time = 0;
-    this.formattedTime.next("00:00")
+  public start() {
+    this.stop();
+    this.reset();
+
     this.interval = setInterval(() => {
-      this.time++
-      this.formattedTime.next(<string>this.datePipe.transform(new Date(this.time * 1000), 'mm:ss'));
-    }, 1000)
+      this.time++;
+      this.formattedTime = this.formatTime(this.time * 1000);
+    }, this.ONE_SECOND);
   }
 
-  clearTimeInterval() {
-    clearInterval(this.interval)
+  public stop() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
+  public reset() {
+    this.time = 0;
+    this.formattedTime = this.formatTime(this.time);
+  }
 
+  private formatTime(ms: number): string {
+    return this.datePipe.transform(new Date(ms), 'mm:ss')!;
+  }
 }

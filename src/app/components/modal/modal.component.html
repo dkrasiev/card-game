@@ -1,11 +1,11 @@
-<div class="container" >
+<div class="container" (click)="onBackdropClick($event)">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h2 class="modal__title">{{ title }}</h2>
 
-  <div class="modal">
-
-    <h2 class="modal__title">{{title}}</h2>
     <ng-content></ng-content>
-    <button  class="modal__button" (click)="click">Играть</button>
 
+    <!-- <button class="modal__button" (click)="emitClick()"> -->
+    <!--   {{ actionName }} -->
+    <!-- </button> -->
   </div>
-
 </div>

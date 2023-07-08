@@ -1,20 +1,24 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CountService {
-  count: BehaviorSubject<number> = new BehaviorSubject<number>(0)
+  public readonly count$: Observable<number>;
+
+  private _count$: BehaviorSubject<number>;
 
   constructor() {
+    this._count$ = new BehaviorSubject<number>(0);
+    this.count$ = from(this._count$);
   }
 
-  step() {
-    this.count.next(this.count.value + 1)
+  public step() {
+    this._count$.next(this._count$.value + 1);
   }
 
-  resetCount() {
-    this.count.next(0)
+  public reset() {
+    this._count$.next(0);
   }
 }

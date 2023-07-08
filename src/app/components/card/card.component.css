@@ -2,7 +2,10 @@
   width: 3em;
   height: 4em;
   font-size: 24px;
+
   -webkit-transition: transform 0.6s;
+  transition: transform 0.6s;
+
   transform-style: preserve-3d;
   perspective: 1000px;
 }
@@ -12,13 +15,18 @@
   -webkit-transform: rotateY(180deg);
 }
 
+/* .card.matched { */
+/*   display: none; */
+/* } */
+
 .back img {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-.front, .back {
+.front,
+.back {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   display: flex;
@@ -48,63 +56,3 @@
   top: 0;
   color: #20263f;
 }
-
-
-
-
-
-/*.card {*/
-/*  width: 3em;*/
-/*  height: 4em;*/
-/*  color: #000;*/
-/*  position: relative;*/
-/*  font-size: 24px;*/
-/*  perspective: 600px;*/
-/*  -webkit-transition: transform 0.6s;*/
-/*  transform-style: preserve-3d;*/
-/*}*/
-
-/*.card.active {*/
-/*  transform: rotateY(180deg);*/
-/*  -webkit-transform: rotateY(180deg);*/
-/*}*/
-
-/*.back,*/
-/*.front {*/
-/*  height: 100%;*/
-/*  width: 100%;*/
-/*  position: absolute;*/
-/*  left: 0;*/
-/*  top: 0;*/
-/*  display: flex;*/
-/*  justify-content: center;*/
-/*  align-items: center;*/
-/*  transition: 0.3s;*/
-/*  -webkit-backface-visibility: hidden;*/
-/*  backface-visibility: hidden;*/
-/*  transform-style: preserve-3d;*/
-/*}*/
-
-/*.front {*/
-/*  background-color: #fff;*/
-/*  transform: rotateX(360deg);*/
-/*  -webkit-transform: rotateX(360deg);*/
-/*}*/
-
-/*.back {*/
-/*  transform: rotateY(360deg);*/
-/*  -webkit-transform: rotateY(360deg);*/
-
-/*}*/
-
-
-
-/*.back img {*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*}*/
-
-/*.hidden {*/
-/*  visibility: hidden;*/
-/*}*/
-

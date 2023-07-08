@@ -1,27 +1,45 @@
-<div class="count">Ходы: {{this.countService.count | async}} Время: {{this.timeService.formattedTime | async}}</div>
-
-
-<div class="game">
-    <app-card *ngFor="let card of this.gameService.cards " [card]="card" >
-    </app-card>
+<div class="count">
+  <p>Ходы: {{ this.countService.count$ | async }}</p>
+  <p>Время: {{ this.timeService.formattedTime }}</p>
 </div>
 
+<div class="game-field">
+  <div *ngFor="let row of rows" class="game-field__row">
+    <app-card *ngFor="let card of row; trackBy: cardTrackBy" [id]="card.id" [value]="card.value"
+      [clicked]="card.clicked" [matched]="card.matched" (select)="select($event)">
+    </app-card>
+  </div>
+</div>
 
-<app-modal *ngIf="modalShow" (click)="startGame()" title="Игра 'Найди пару'">
-
+<app-modal *ngIf="newGameModalShow" title="Игра 'Найди пару'" actionName="Играть">
+  <ng-container *ngTemplateOutlet="newGameButtons"></ng-container>
 </app-modal>
 
-<app-modal *ngIf="this.gameService.win" (click)="restartGame()" title="Вы выиграли">
-
+<app-modal *ngIf="isWin" title="Вы выиграли" actionName="Начать новую игру">
   <div class="modal__info">
-    <span>Ходы: {{this.countService.count | async}} </span>
-    <span>Время: {{this.timeService.formattedTime | async}}</span>
+    <span>Ходы: {{ this.countService.count$ | async }} </span>
+    <span>Время: {{ this.timeService.formattedTime }}</span>
   </div>
 
+  <ng-container *ngTemplateOutlet="newGameButtons"></ng-container>
 </app-modal>
 
+<ng-template #newGameButtons>
+  <div class="button-group">
+    <button class="button" (click)="startPreset('easy')">easy</button>
+    <button class="button" (click)="startPreset('medium')">medium</button>
+    <button class="button" (click)="startPreset('hard')">hard</button>
 
+    <button class="button" (click)="customGameModalShow = true">custom</button>
 
+    <app-modal *ngIf="customGameModalShow" title="Custom game" [closable]="true" (click)="customGameModalShow = false">
+      <input [(ngModel)]="rowInput" />
+      <input [(ngModel)]="columnInput" />
 
-
-
+      <button (click)="startNewGame(rowInput, columnInput)">
+        start custom game
+      </button>
+      <button (click)="customGameModalShow = false">cancel</button>
+    </app-modal>
+  </div>
+</ng-template>

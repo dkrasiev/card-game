@@ -1,11 +1,18 @@
-.game {
-  display: grid;
-  width: 75%;
-  height: 635px;
+.game-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  max-width: 1024px;
   margin: 0 auto;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  column-gap: 20px;
-  row-gap: 1px;
+}
+
+.game-field__row {
+  display: flex;
+  gap: 0.5rem;
+
+  width: fit-content;
+  margin: 0 auto;
 }
 
 app-card {
@@ -21,7 +28,7 @@ app-card {
   text-align: center;
 }
 
-.modal__button {
+.button {
   padding: 10px 50px;
   align-self: center;
   margin: 30px 0;
@@ -29,8 +36,7 @@ app-card {
   border: none;
 }
 
-
-.modal__button:hover {
+.button:hover {
   cursor: pointer;
   background-color: #a7e3c3;
 }
